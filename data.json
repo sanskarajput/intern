@@ -1,5 +1,20 @@
-{
-  "username": "sdjcb",
-  "email": "kumar@gmail.com",
-  "hashedPassword": "$2b$10$J9/jhDoFXIFJjbhXX0G0X.1Ow0wMdgJ.I7HqMB9XFLdHSP1f5c/Ze"
-}
+[
+  {
+    "id": "7672e4d6-dac3-4b90-bdea-311617d23545",
+    "username": "kumar",
+    "email": "kumar@gmail.com",
+    "hashedPassword": "$2b$10$12t5beybRQApcFeMRfWXCOIngmD6HBGA2jKqzcGb4N298tDSgJ8CO"
+  },
+  {
+    "id": "812bdc0e-1b07-4610-9fbe-b193726a3a27",
+    "username": "nannu",
+    "email": "kumar@gmail.com",
+    "hashedPassword": "$2b$10$.zE3hcsgLjgMllViJRoBCOkp38mAXT7gvOldvjFSLOB2FSTaAZe72"
+  },
+  {
+    "id": "378294d0-6291-4633-a9f0-197acc58ca5d",
+    "username": "nannus",
+    "email": "kumar@gmail.com",
+    "hashedPassword": "$2b$10$UPJPLq6l8gmL7nyZm.4JlOS9.Hl1YZ9T/mQvwa3HrwrVoUJDFoDa6"
+  }
+]

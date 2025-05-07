@@ -1,6 +1,7 @@
 const express = require('express')
 const fs = require('fs');
 const bcrypt = require('bcrypt');
+const { v4: uuidv4 } = require('uuid');
 
 const app = express()
 const port = 3000
@@ -22,21 +23,39 @@ app.post('/sign-in', async (req, res) => {
         return pattern.test(email);
     }
 
-    if (valid(email)) {
-        const saltRounds = 10; // Adjust the salt rounds as needed
-        const salt = await bcrypt.genSalt(saltRounds);
-        const hashedPassword = await bcrypt.hash(password, salt);
-    
-        const data = { username, email, hashedPassword };
-    
-        const jsonString = JSON.stringify(data, null, 2); // Convert data to JSON string with indentation
-        fs.writeFileSync('data.json', jsonString);
-    
-        res.send({ message: 'User created successfully.', username:username }).status(200);
+    if (!valid(email)) {
+        return res.send({ message: 'Invalid email address.' }).status(400);
     }
-    
-    
-    res.send({ message: 'Invalid email address.' }).status(400);
+
+    let users = [];
+    try {
+        const data = fs.readFileSync('data.json', 'utf8');
+        users = JSON.parse(data);
+        if (!Array.isArray(users)) users = [];
+    } catch (err) {
+        users = [];
+    }
+
+    const existingUser = users.find(user => user.username === username);
+    if (existingUser) {
+        return res.status(409).send({ message: 'Username already exists.' });
+    }
+
+
+    const saltRounds = 10;
+    const salt = await bcrypt.genSalt(saltRounds);
+    const hashedPassword = await bcrypt.hash(password, salt);
+
+    const id = uuidv4();
+
+    const newUser = { id, username, email, hashedPassword };
+
+    users.push(newUser);
+
+    fs.writeFileSync('data.json', JSON.stringify(users, null, 2));
+
+    return res.send({ message: 'User created successfully.', id: id }).status(200);
+
 })
 
 app.listen(port, () => {
